@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submit</title>
+
+    <style>
+
+        .area-1 {
+            margin-bottom: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    <center>
+        <div class="area-1">
+            <h1>Form Input Example</h1>
+            <br>
+            <table>
+                <form action="/submit" method="post">
+                    <tr>
+                        <td>Username</td>
+                        <td>
+                            <input type="text" name="username" id="username" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td>
+                            <input type="password" name="password" id="password" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fullname</td>
+                        <td>
+                            <input type="text" name="fullname" id="fullname" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>
+                            <input type="number" name="phone" id="phone" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding-top: 10px;">
+                            <button type="submit">Submit</button>
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+        <div class="area-2">
+            <table border="1" width="1000">
+                <thead>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Fullname</th>
+                    <th>Phone</th>
+                </thead>
+                {% for user in users %}
+                    <tbody style="text-align: center;">
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                        <td>{{ user[4] }}</td>
+                    </tbody>
+                {% endfor %}
+                </table>
+        </div>
+    </center>
+
+</body>
+</html>
