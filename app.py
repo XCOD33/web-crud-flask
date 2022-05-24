@@ -14,7 +14,6 @@ mysql = MySQL(app)
 @app.route('/', methods=['GET'])
 def index():
     if request.method == 'GET' and 'loggedIn' in session:
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM user")
         users = cur.fetchall()
@@ -27,7 +26,7 @@ def index():
 @app.route('/login', methods = ['GET','POST'])
 def login():
 
-    if request.method == 'POST' and 'loggedIn' in session:
+    if request.method == 'GET' and 'loggedIn' in session:
         return redirect(url_for('index'))
 
     if request.method == 'GET':
@@ -44,8 +43,7 @@ def login():
 
         if user:
             session['loggedIn'] = True
-            session['username'] = user[1]
-            session['password'] = user[2]
+            session['name'] = user[3]
 
             return redirect(url_for('index'))
 

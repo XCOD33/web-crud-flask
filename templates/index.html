@@ -1,51 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-</head>
-<body>
-    
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-primary text-center text-white">
-                    <h3 class="h5 mb-0">List of All Users</h3>
-                </div>
-                <div class="card-body">
+{% extends 'base.html' %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-center text-white">
+                <h3 class="h5 mb-0">List of All Users</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
                     <div class="table-responsive">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Password</th>
-                                        <th scope="col">Fullname</th>
-                                        <th scope="col">Phone Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-group-divider">
-                                    {% for user in users %}
-                                    <tr>
-                                        <td>{{ loop.index }}</td>
-                                        <td>{{ user[1] }}</td>
-                                        <td>***</td>
-                                        <td>{{ user[3] }}</td>
-                                        <td>{{ user[4] }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Password</th>
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Phone Number</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ user[1] }}</td>
+                                    <td>***</td>
+                                    <td>{{ user[3] }}</td>
+                                    <td>{{ user[4] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>
+{% endblock %}
