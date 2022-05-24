@@ -82,5 +82,38 @@ def logout():
         session.clear()
         return redirect(url_for('index'))
 
+@app.route('/edit/<int:id>', methods=['GET','POST'])
+def edit(id):
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM user WHERE id=%s", (id,))
+        userSelected = cur.fetchone()
+        cur.close()
+
+        return render_template('edit.html',user=userSelected)
+    if request.method == 'POST':
+        username = request.form['username']
+        fullname = request.form['fullname']
+        phone = request.form['phone']
+
+        if request.form['password'] != '':
+            password = request.form['password'].encode('utf-8')
+            hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE user SET username=%s, password=%s, fullname=%s, phone=%s WHERE username=%s", (username, hash_password, fullname, phone, username))
+            mysql.connection.commit()
+            cur.close()
+
+            return redirect(url_for('index'))
+
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE user SET username=%s, fullname=%s, phone=%s WHERE username=%s", (username, fullname, phone, username))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('index'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

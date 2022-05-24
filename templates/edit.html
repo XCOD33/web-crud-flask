@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit {{ user[3] }}
+{% endblock %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-primary text-center text-white">
+                <h3 class="h5 mb-0">Edit User : {{ user[3] }}</h3>
+            </div>
+            <div class="card-body">
+                <form action="/edit/{{ user[0] }}" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" id="username" value="{{ user[1] }}" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Full Name</label>
+                        <input type="text" name="fullname" class="form-control" id="fullname" value="{{ user[3] }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" id="phone" value="{{ user[4] }}" required>
+                    </div>
+                    <div class="mb-3 d-grid gap-2">
+                        <button type="submit" class="btn btn-warning">Edit data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
