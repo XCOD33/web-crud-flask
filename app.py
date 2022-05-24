@@ -114,6 +114,18 @@ def edit(id):
 
         return redirect(url_for('index'))
 
+@app.route('/delete/<int:id>', methods=['GET','POST'])
+def delete(id):
+    if request.method == 'GET':
+        return redirect(url_for('index'))
+    if request.method == 'POST' and 'loggedIn' in session:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM user WHERE id=%s", (id,))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('index'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
