@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, session
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -7,24 +7,56 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'pbop-pertemuan-11'
+app.secret_key = 'ewd34r45y56u6yht'
 
 mysql = MySQL(app)
 
-@app.route('/form')
-def form():
+@app.route('/', methods=['GET'])
+def index():
+    if request.method == 'GET' and 'loggedIn' in session:
 
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM user")
-    users = cur.fetchall()
-    cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM user")
+        users = cur.fetchall()
+        cur.close()
 
-    return render_template('form.html', users=users)
-
-@app.route('/submit', methods = ['GET','POST'])
-def submit():
+        return render_template('index.html', users=users)
     if request.method == 'GET':
-        return redirect(url_for('form'))
+        return redirect(url_for('login'))
 
+@app.route('/login', methods = ['GET','POST'])
+def login():
+
+    if request.method == 'POST' and 'loggedIn' in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM user WHERE username=%s AND password=%s", (username, password))
+        user = cur.fetchone()
+        cur.close()
+
+        if user:
+            session['loggedIn'] = True
+            session['username'] = user[1]
+            session['password'] = user[2]
+
+            return redirect(url_for('index'))
+
+        return redirect(url_for('login'))
+
+@app.route('/register', methods=['GET','POST'])
+def register():
+    if request.method == 'GET' and 'loggedIn' in session:
+        return redirect(url_for('index'))
+    if request.method == 'GET':
+        return render_template('register.html')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
